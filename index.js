@@ -1,8 +1,8 @@
-
 const express = require('express');
 const multer = require('multer');
 const app = express();
 const upload = multer();
+const port = process.env.PORT || 3000;
 
 // Set up the view engine
 app.use(express.static('public'));
@@ -11,9 +11,7 @@ app.get('/', (req, res) => {
   res.sendFile(`${__dirname}/views/index.html`);
 });
 
-
-// Set up your middleware and routes here
-
+// Handle the file upload
 app.post('/api/fileanalyse', upload.single('upfile'), (req, res) => {
   if (!req.file) {
     return res.json({ error: 'No file uploaded' });
@@ -28,10 +26,6 @@ app.post('/api/fileanalyse', upload.single('upfile'), (req, res) => {
 });
 
 // Start your server
-const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-
-
-
